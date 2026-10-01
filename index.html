@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌻 Flores Amarillas para Lucy | Un Detalle Especial 💛</title>
+  <meta name="description"
+    content="Una hermosa experiencia interactiva de flores amarillas dedicada especialmente para Lucy. Flores florecientes, lluvia de pétalos, música mágica y una carta personalizada.">
+  <meta name="keywords" content="flores amarillas, Lucy, dedicatoria, girasoles, floricienta, regalo virtual">
+
+  <!-- Favicon con emoji de girasol -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌻</text></svg>">
+
+  <!-- Google Fonts: Caligrafía romántica, serif editorial y sans moderna -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400&family=Alex+Brush&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Canvas para el fondo dinámico de pétalos flotantes y destellos -->
+  <canvas id="petal-canvas"></canvas>
+
+  <!-- Luces ambientales de fondo (Golden Ambient Glow) -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Barra de Navegación Superior -->
+  <header class="top-bar">
+    <div class="brand-tag">
+      <span class="heart-pulse">💛</span>
+      <span class="brand-text">Para: <strong>Lucy</strong></span>
+    </div>
+
+    <div class="nav-controls">
+      <!-- Contador de flores plantadas -->
+      <div class="garden-counter" id="gardenCounter" title="Haz clic en la pantalla para hacer florecer más">
+        <span class="counter-icon">🌻</span>
+        <span class="counter-text"><span id="flowerCount">0</span> flores florecidas</span>
+      </div>
+
+      <!-- Control de música con sintetizador Web Audio -->
+      <button class="music-btn" id="musicBtn" aria-label="Reproducir melodía de flores amarillas">
+        <span class="music-icon" id="musicIcon">🎵</span>
+        <span class="music-label">Melodía Mágica</span>
+        <div class="sound-bars" id="soundBars">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+      </button>
+    </div>
+  </header>
+
+  <!-- Contenedor Principal -->
+  <main class="main-wrapper">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-badge">
+        <span class="badge-sparkle">✨</span>
+        <span>Un detalle que florece para ti</span>
+        <span class="badge-sparkle">✨</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="title-sub">Ramo de Amor y Esperanza</span>
+        <span class="title-main">Flores Amarillas</span>
+        <span class="lucy-cursive">Para Lucy</span>
+      </h1>
+
+      <p class="hero-desc">
+        Dicen que regalar flores amarillas significa desear luz eterna, alegría inagotable y
+        la promesa de que siempre habrá felicidad en tu vida. Hoy este jardín entero florece en tu honor.
+      </p>
+
+      <!-- Botones de Acción Rápida -->
+      <div class="action-buttons">
+        <button class="action-btn btn-primary" id="btnShower">
+          <span class="btn-icon">💐</span>
+          <span>Lluvia de Flores</span>
+        </button>
+        <button class="action-btn btn-secondary" id="btnOpenLetter">
+          <span class="btn-icon">💌</span>
+          <span>Leer Dedicatoria</span>
+        </button>
+      </div>
+
+      <div class="click-hint">
+        <span class="hint-pulse">🌻</span>
+        <span>Toca la pantalla para hacer florecer girasoles para Lucy</span>
+      </div>
+    </section>
+
+    <!-- Galería / Vitrina de las Flores Amarillas -->
+    <section class="flower-showcase">
+
+      <!-- Tarjeta 1: La Obra de Arte con el Ramo Radiante -->
+      <div class="artwork-card" id="artworkCard">
+        <div class="card-glow"></div>
+        <div class="card-inner">
+          <div class="image-frame">
+            <img src="assets/flores_amarillas_lucy.jpg"
+              alt="Hermoso ramo de flores amarillas y girasoles dorados para Lucy" id="flowerImage" class="flower-img"
+              loading="eager">
+            <div class="image-overlay">
+              <span class="overlay-tag">Especialmente para Lucy 💛</span>
+              <button class="tap-shine-btn" id="btnShineImage">
+                <span>✨ Iluminar Ramo</span>
+              </button>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="flower-quote">
+              <span class="quote-mark">“</span>
+              <p>Ella sabía que él sabía, que algún día pasaría... que vendría a buscarla con sus flores amarillas.</p>
+              <span class="quote-mark">”</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2: Ramo de Girasoles Interactivos en SVG y Animación -->
+      <div class="bouquet-card">
+        <div class="bouquet-header">
+          <h3>Ramo Mágico Animado</h3>
+          <p>Toca o pasa el cursor sobre las flores para verlas bailar</p>
+        </div>
+
+        <div class="bouquet-stage" id="bouquetStage">
+          <!-- SVG interactivo del ramo de girasoles -->
+          <svg class="sunflower-svg" viewBox="0 0 500 550" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="stemGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#2d6a4f" />
+                <stop offset="50%" stop-color="#52b788" />
+                <stop offset="100%" stop-color="#1b4332" />
+              </linearGradient>
+
+              <linearGradient id="petalGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fff3b0" />
+                <stop offset="40%" stop-color="#ffd60a" />
+                <stop offset="100%" stop-color="#ff9f1c" />
+              </linearGradient>
+
+              <linearGradient id="petalGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#ffe66d" />
+                <stop offset="50%" stop-color="#ffb703" />
+                <stop offset="100%" stop-color="#fb8500" />
+              </linearGradient>
+
+              <radialGradient id="centerGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#582f0e" />
+                <stop offset="70%" stop-color="#331800" />
+                <stop offset="90%" stop-color="#7f4f24" />
+                <stop offset="100%" stop-color="#d4a373" />
+              </radialGradient>
+
+              <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="rgba(255, 230, 109, 0.9)" />
+                <stop offset="60%" stop-color="rgba(255, 183, 3, 0.4)" />
+                <stop offset="100%" stop-color="rgba(255, 183, 3, 0)" />
+              </radialGradient>
+
+              <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="8" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            <!-- Florero / Envoltorio de papel kraft con lazo dorado -->
+            <g class="vase-group">
+              <!-- Hojas de fondo -->
+              <path class="leaf leaf-left" d="M140 340 C 90 310, 60 250, 90 200 C 130 220, 160 270, 150 330 Z"
+                fill="#2d6a4f" />
+              <path class="leaf leaf-right" d="M360 340 C 410 310, 440 250, 410 200 C 370 220, 340 270, 350 330 Z"
+                fill="#2d6a4f" />
+              <path class="leaf" d="M250 310 C 200 280, 180 230, 210 190 C 240 220, 260 260, 255 305 Z" fill="#40916c"
+                opacity="0.9" />
+
+              <!-- Tallos de las flores -->
+              <path class="stem stem-1" d="M250 450 Q 230 350 250 220" stroke="url(#stemGrad)" stroke-width="12"
+                fill="none" stroke-linecap="round" />
+              <path class="stem stem-2" d="M240 450 Q 180 340 160 230" stroke="url(#stemGrad)" stroke-width="10"
+                fill="none" stroke-linecap="round" />
+              <path class="stem stem-3" d="M260 450 Q 320 340 340 230" stroke="url(#stemGrad)" stroke-width="10"
+                fill="none" stroke-linecap="round" />
+              <path class="stem stem-4" d="M245 460 Q 140 370 110 300" stroke="url(#stemGrad)" stroke-width="8"
+                fill="none" stroke-linecap="round" />
+              <path class="stem stem-5" d="M255 460 Q 360 370 390 300" stroke="url(#stemGrad)" stroke-width="8"
+                fill="none" stroke-linecap="round" />
+
+              <!-- Envoltorio de papel / Florero de cristal con lazo -->
+              <path d="M190 400 L 160 520 C 160 535, 340 535, 340 520 L 310 400 Z" fill="#b08968" opacity="0.9" />
+              <path d="M185 390 L 315 390 L 325 420 L 175 420 Z" fill="#7f5539" />
+              <!-- Lazo dorado con nombre Lucy -->
+              <path d="M250 410 C 220 390, 190 420, 230 430 C 245 435, 250 415, 250 410 Z" fill="#ffb703" />
+              <path d="M250 410 C 280 390, 310 420, 270 430 C 255 435, 250 415, 250 410 Z" fill="#ffb703" />
+              <circle cx="250" cy="415" r="9" fill="#fb8500" />
+              <path d="M245 420 L 220 480 L 235 480 L 248 430 Z" fill="#ffb703" />
+              <path d="M255 420 L 280 480 L 265 480 L 252 430 Z" fill="#ffb703" />
+              <text x="250" y="475" text-anchor="middle" fill="#fff" font-family="'Dancing Script', cursive"
+                font-size="20" font-weight="bold">Lucy</text>
+            </g>
+
+            <!-- Girasol Izquierda (Secundario) -->
+            <g class="sunflower flower-interactive flower-left" transform="translate(160, 230)">
+              <circle cx="0" cy="0" r="70" fill="url(#centerGlow)" opacity="0.6" filter="url(#goldGlow)" />
+              <!-- Pétalos exteriores -->
+              <g class="petals-ring">
+                <!-- Se generan múltiples pétalos girados -->
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(0)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(25)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(50)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(75)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(100)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(125)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(150)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(175)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(200)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(225)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(250)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(275)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(300)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(325)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(345)" />
+
+                <!-- Segunda capa de pétalos interiores -->
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(12)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(37)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(62)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(87)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(112)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(137)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(162)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(187)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(212)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(237)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(262)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(287)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(312)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(337)" />
+              </g>
+              <circle cx="0" cy="0" r="24" fill="url(#centerGrad)" />
+              <circle cx="0" cy="0" r="18" fill="none" stroke="#e09f3e" stroke-width="2" stroke-dasharray="3,3" />
+            </g>
+
+            <!-- Girasol Derecha (Secundario) -->
+            <g class="sunflower flower-interactive flower-right" transform="translate(340, 230)">
+              <circle cx="0" cy="0" r="70" fill="url(#centerGlow)" opacity="0.6" filter="url(#goldGlow)" />
+              <g class="petals-ring">
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(0)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(25)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(50)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(75)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(100)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(125)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(150)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(175)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(200)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(225)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(250)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(275)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(300)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(325)" />
+                <ellipse cx="0" cy="-45" rx="11" ry="28" fill="url(#petalGrad1)" transform="rotate(345)" />
+
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(12)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(37)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(62)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(87)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(112)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(137)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(162)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(187)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(212)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(237)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(262)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(287)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(312)" />
+                <ellipse cx="0" cy="-35" rx="9" ry="22" fill="url(#petalGrad2)" transform="rotate(337)" />
+              </g>
+              <circle cx="0" cy="0" r="24" fill="url(#centerGrad)" />
+              <circle cx="0" cy="0" r="18" fill="none" stroke="#e09f3e" stroke-width="2" stroke-dasharray="3,3" />
+            </g>
+
+            <!-- Girasol Principal Central (Rey del Ramo) -->
+            <g class="sunflower flower-interactive flower-center" transform="translate(250, 180)">
+              <circle cx="0" cy="0" r="95" fill="url(#centerGlow)" opacity="0.8" filter="url(#goldGlow)" />
+              <g class="petals-ring petals-center">
+                <!-- 20 Pétalos dorados grandes -->
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(0)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(18)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(36)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(54)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(72)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(90)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(108)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(126)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(144)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(162)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(180)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(198)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(216)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(234)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(252)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(270)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(288)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(306)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(324)" />
+                <ellipse cx="0" cy="-58" rx="14" ry="38" fill="url(#petalGrad1)" transform="rotate(342)" />
+
+                <!-- Capa interna intercalada -->
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(9)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(27)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(45)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(63)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(81)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(99)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(117)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(135)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(153)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(171)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(189)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(207)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(225)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(243)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(261)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(279)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(297)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(315)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(333)" />
+                <ellipse cx="0" cy="-46" rx="11" ry="30" fill="url(#petalGrad2)" transform="rotate(351)" />
+              </g>
+              <!-- Centro texturizado con semillas -->
+              <circle cx="0" cy="0" r="32" fill="url(#centerGrad)" />
+              <circle cx="0" cy="0" r="26" fill="none" stroke="#d4a373" stroke-width="2.5" stroke-dasharray="4,3" />
+              <circle cx="0" cy="0" r="18" fill="none" stroke="#faedcd" stroke-width="2" stroke-dasharray="3,2" />
+              <circle cx="0" cy="0" r="8" fill="#3a1d00" />
+            </g>
+
+            <!-- Pequeñas flores silvestres complementarias -->
+            <g class="wildflower" transform="translate(105, 290)">
+              <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#ffea00" transform="rotate(0)" />
+              <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#ffea00" transform="rotate(60)" />
+              <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#ffea00" transform="rotate(120)" />
+              <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#ffea00" transform="rotate(180)" />
+              <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#ffea00" transform="rotate(240)" />
+              <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#ffea00" transform="rotate(300)" />
+              <circle cx="0" cy="0" r="9" fill="#ff9e00" />
+            </g>
+
+            <g class="wildflower" transform="translate(390, 290)">
+              <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#ffea00" transform="rotate(30)" />
+              <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#ffea00" transform="rotate(90)" />
+              <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#ffea00" transform="rotate(150)" />
+              <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#ffea00" transform="rotate(210)" />
+              <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#ffea00" transform="rotate(270)" />
+              <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#ffea00" transform="rotate(330)" />
+              <circle cx="0" cy="0" r="9" fill="#ff9e00" />
+            </g>
+          </svg>
+        </div>
+
+        <div class="bouquet-controls">
+          <button class="stage-btn" id="btnGlowBouquet">✨ Activar Resplandor Dorado</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Sección de la Carta para Lucy (Visible Directamente) -->
+    <section class="letter-section" id="letterSection">
+      <div class="section-title-wrap">
+        <span class="sub-badge">Correspondencia del Corazón</span>
+        <h2 class="section-title">Una Carta Especial para Lucy</h2>
+        <p class="section-subtitle">Un detalle que florece con todo el cariño y admiración</p>
+      </div>
+
+      <!-- La Carta de Pergamino Abierta y Directa -->
+      <div class="letter-container">
+        <article class="letter-paper direct-letter" id="letterPaper">
+          <div class="decorative-seal" title="Sello dorado para Lucy">
+            <span class="seal-letter">L</span>
+          </div>
+
+          <div class="letter-ornament top-ornament">🌻 ✨ 🌻</div>
+
+          <header class="letter-header">
+            <span class="letter-date" id="letterDate">Para el día más luminoso</span>
+            <h3 class="letter-recipient" id="displayRecipient">Querida Lucy,</h3>
+          </header>
+
+          <div class="letter-body" id="displayMessage">
+            <p class="poem-highlight">
+              «Ella sabía que él sabía,<br>
+              que algún día pasaría...<br>
+              que vendría a buscarla<br>
+              con sus flores amarillas.»
+            </p>
+
+            <p>
+              Que cada pétalo amarillo que florece hoy te recuerde lo valiosa, única y radiante que eres.
+              Que tu vida siempre esté llena de luz dorada, de sonrisas sinceras y de personas que sepan apreciar
+              la calidez de tu corazón.
+            </p>
+
+            <p>
+              Nunca dejes de florecer, porque el mundo es un lugar mucho más hermoso cuando tú estás en él.
+              ¡Estas flores son una promesa de alegría eterna para ti!
+            </p>
+          </div>
+
+          <footer class="letter-footer">
+            <span class="letter-closing">Con todo mi cariño sincero,</span>
+            <span class="letter-signature" id="displaySender">Siempre a tu lado ✨</span>
+          </footer>
+
+          <div class="letter-ornament bottom-ornament">🌻 💛 🌻</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Frases y Significado de las Flores Amarillas -->
+    <section class="meaning-section">
+      <div class="meaning-grid">
+        <div class="meaning-card">
+          <div class="meaning-icon">☀️</div>
+          <h4>Luz & Calidez</h4>
+          <p>El color amarillo simboliza los rayos del sol, llenando cada día de optimismo, energía y esperanza para
+            Lucy.</p>
+        </div>
+        <div class="meaning-card">
+          <div class="meaning-icon">🌻</div>
+          <h4>Amor & Amistad</h4>
+          <p>Un pacto incondicional de lealtad y cariño que perdura en cada temporada de la vida.</p>
+        </div>
+        <div class="meaning-card">
+          <div class="meaning-icon">✨</div>
+          <h4>La Promesa</h4>
+          <p>Tal como cuenta la canción, un detalle que marca recuerdos inolvidables y momentos que tocan el alma.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast de Notificación Flotante -->
+  <div class="toast-notification" id="toast">
+    <span class="toast-icon">🌻</span>
+    <span class="toast-text" id="toastText">¡Floreció un nuevo girasol!</span>
+  </div>
+
+  <!-- Pie de Página -->
+  <footer class="site-footer">
+    <p class="footer-text">
+      Creado con todo el amor y magia para <strong>Lucy</strong> 💛 · Flores Amarillas Eternas
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
